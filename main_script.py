@@ -28,7 +28,7 @@ def hen_message(message: Message):
     usr_mess = str(message.text)  # Переменная хранит запрос от пользователя.
 
     answer = script_for_twitter.Main(usr_mess)  # Создане обьекта класса Main. Конструктор обрабатывает переданный аргумент.
-    ans = answer.parse()  # Возвращает список, отправка ответа пользователя реализована через цикл.
+    ans = answer.make_logfile()  # Возвращает список, отправка ответа пользователя реализована через цикл.
     for i in ans:
         bot.send_message(message.chat.id, i)
 
