@@ -14,18 +14,25 @@ class Main(object):
         return res
 
     def go_to_page(self):
-        self.driver.get('https://google.com/')  # Переход на поисковую страницу google.com
-        search = self.driver.find_element_by_name('q')  # Определение окна поиска
+        self.driver.get('https://twitter.com/explore')
+        time.sleep(4)
+        search = self.driver.find_element_by_xpath(
+            '//*[@id="react-root"]/div/div/div[2]/header/div[2]/div[1]/div/div/div[2]/div/div/div/form/div[1]/div/div/div[2]/input')  # Определение окно поиска
 
         str_name = str(self.name)
-        mess = str_name + ' Twitter'
-        search.send_keys(mess)
+        # mess = str_name + ' Twitter'
+        search.send_keys(str_name)
         search.send_keys(Keys.ENTER)  # Процесс ввода в поисковую строку и запуск поиска
 
-        self.driver.find_element_by_xpath(
-            '//*[@id="rso"]/div[1]/div/div/g-section-with-header/div[1]/div/div/div[2]/g-link/a').click()  # Переход по первой ссылке
+        time.sleep(4)
+        self.driver.find_element_by_partial_link_text("Люди").click()
+        # Переход по первой ссылке
+        #  //*[@id="react-root"]/div/div/div[2]/header/div[2]/div[1]/div[2]/nav/div/div[2]/div/div[3]/a/div/span
+        time.sleep(4)  # Ждем пока страница загрузится
 
-        time.sleep(8)  # Ждем пока страница загрузится
+        self.driver.find_element_by_xpath(
+            '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div/div/div/div/div/section/div/div/div/div[1]/div/div/div/div[2]/div[1]/div[1]/a/div/div[1]/div[1]/span/span').click()
+        time.sleep(4)
         list = []  # В этот список собирается ответ для возвращения в модуль main_script.py
 
         """Сбор информации осуществляется по XPath """
@@ -48,7 +55,7 @@ class Main(object):
         list.append(first_inf_true)
         list.append(sec_inf_true)
         list.append(tri_inf_true)
-        print(list)
+
         return list  # Возвращаю полученный результат в виде списка
 
         # time.sleep(50)
@@ -58,12 +65,16 @@ class Main(object):
         # print(i.get_attribute('href'))
 
 
-def main():
-    parser = Main()
-    parser.parse()
+def main(atr):
+    answer = Main(atr)
+    result = answer.parse()
+    for i in result:
+        print (i)
+
     # btn = driver.find_element_by_class_name("details")
 
 
 if __name__ == '__main__':
-    main()
+    user_input = input("Введите посиковой запрос: \n")
+    main(user_input)
 # В случае импорта модуля, код не запускается на выполнение.
