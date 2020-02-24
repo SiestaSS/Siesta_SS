@@ -35,8 +35,12 @@ class Main(object):
         search.send_keys(str_name)
         search.send_keys(Keys.ENTER)  # Процесс ввода в поисковую строку и запуск поиска
         time.sleep(4)
-        self.driver.find_element_by_partial_link_text("Люди").click() #Переход на вкладку люди
-        time.sleep(4)  # Ждем пока страница загрузится
+        try:
+            self.driver.find_element_by_partial_link_text("Люди").click() #Переход на вкладку люди
+            time.sleep(4)  # Ждем пока страница загрузится
+        except:
+            self.driver.find_element_by_partial_link_text("People").click()  # Переход на вкладку люди
+            time.sleep(4)  # Ждем пока страница загрузится
 
         try:
             self.driver.find_element_by_xpath(
